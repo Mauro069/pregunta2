@@ -1,0 +1,15 @@
+header {
+  width: 100vw;
+  height: 60px;
+  background-color: #ff4343;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-family: Poppins;
+  color: white;
+
+  h2 {
+    font-weight: normal;
+  }
+}
