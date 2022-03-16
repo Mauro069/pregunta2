@@ -1,0 +1,32 @@
+.start {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+
+  span {
+    text-align: center;
+    padding: 0 30px;
+    font-family: Poppins;
+    font-weight: 600;
+  }
+
+  button {
+    background-color: rgb(67, 255, 83);
+    border: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    color: black;
+    font-family: Podkova;
+    cursor: pointer;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+    transition-duration: 0.3s;
+  }
+}

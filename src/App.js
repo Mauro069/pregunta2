@@ -6,8 +6,11 @@ import Opciones from "./Components/Opciones";
 import Timer from "./Components/Timer";
 
 import styles from "./App.module.scss";
+import Start from "./Components/Start";
+import Finish from "./Components/Finish";
 
 const App = () => {
+  const [start, setStart] = useState(false);
   const [index, setIndex] = useState(0);
   const [acertadas, setAcertadas] = useState(0);
   const [time, setTime] = useState(15);
@@ -22,24 +25,26 @@ const App = () => {
   }
 
   useEffect(() => {
-    let intervalo = null;
-    if (pause === false) {
-      intervalo = setInterval(() => {
-        setTime((time) => time - 1);
-      }, 1000);
-    }
-    if (time === 0) {
-      setPause(true);
-      clearInterval(intervalo);
-    }
+    if (start === true) {
+      let intervalo = null;
+      if (pause === false) {
+        intervalo = setInterval(() => {
+          setTime((time) => time - 1);
+        }, 1000);
+      }
+      if (time === 0) {
+        setPause(true);
+        clearInterval(intervalo);
+      }
 
-    if (!PreguntasData[index]?.pregunta) {
-      setTime(0);
-      setPause(true);
-    }
+      if (!PreguntasData[index]?.pregunta) {
+        setTime(0);
+        setPause(true);
+      }
 
-    return () => clearInterval(intervalo);
-  }, [time, pause, index]);
+      return () => clearInterval(intervalo);
+    }
+  }, [time, pause, index, start]);
 
   const onClick = (opcion, pregunta) => {
     if (opcion === pregunta) {
@@ -53,63 +58,37 @@ const App = () => {
   return (
     <main>
       <Header />
-      <div>
-        <div className={styles.pregunta}>
-          {PreguntasData[index]?.pregunta && !pause
-            ? PreguntasData[index]?.pregunta
-            : "Juego terminado"}
-        </div>
-        <Opciones
-          pause={pause}
-          index={index}
-          onClick={onClick}
-          PreguntasData={PreguntasData}
-        />
-      </div>
-      <Timer
-        PreguntasData={PreguntasData}
-        myRef={myRef}
-        index={index}
-        time={time}
-        restaSegundos={restaSegundos}
-      />
-      {pause && (
+      {!start && <Start setStart={setStart} />}
+      {start === true && (
         <>
-          <div className={styles.juegoTerminado}>
-            {viewCorrects ? (
-              <div className={styles.correctas}>
-                {PreguntasData.map((pregunta, i) => (
-                  <div>
-                    <p>Pregunta {i + 1}</p>
-                    <h2>{pregunta.opcionCorrecta}</h2>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.mensaje}>
-                <h2>
-                  {acertadas === PreguntasData.length
-                    ? "¡Felicitaciones! Acertaste todas"
-                    : "Juego terminado"}
-                </h2>
-                <h2 className={styles.acertadas}>Acertadas: {acertadas}</h2>
-              </div>
-            )}
+          <div>
+            <div className={styles.pregunta}>
+              {PreguntasData[index]?.pregunta && !pause
+                ? PreguntasData[index]?.pregunta
+                : "Juego terminado"}
+            </div>
+            <Opciones
+              pause={pause}
+              index={index}
+              onClick={onClick}
+              PreguntasData={PreguntasData}
+            />
           </div>
-          <div className={styles.buttons}>
-            <button
-              className={styles.playAgain}
-              onClick={() => window.location.reload()}
-            >
-              Volver a jugar
-            </button>
-            <button
-              className={styles.viewCorrects}
-              onClick={() => setViewCorrects(!viewCorrects)}
-            >
-              {!viewCorrects ? "Ver respuestas" : "Ocultar"}
-            </button>
-          </div>
+          <Timer
+            PreguntasData={PreguntasData}
+            myRef={myRef}
+            index={index}
+            time={time}
+            restaSegundos={restaSegundos}
+          />
+          {pause && (
+            <Finish
+              PreguntasData={PreguntasData}
+              setViewCorrects={setViewCorrects}
+              viewCorrects={viewCorrects}
+              acertadas={acertadas}
+            />
+          )}
         </>
       )}
     </main>
