@@ -100,6 +100,11 @@ main {
     cursor: pointer;
   }
 
+  .playAgain:hover {
+    transform: scale(1.1);
+    transition-duration: .3s;
+  }
+
   .viewCorrects {
     background-color: rgb(67, 255, 83);
     border: none;
@@ -108,5 +113,10 @@ main {
     color: black;
     font-family: Podkova;
     cursor: pointer;
+  }
+
+  .viewCorrects:hover {
+    transform: scale(1.1);
+    transition-duration: .3s;
   }
 }
