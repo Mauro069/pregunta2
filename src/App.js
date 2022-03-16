@@ -80,7 +80,7 @@ const App = () => {
               <div className={styles.correctas}>
                 {PreguntasData.map((pregunta, i) => (
                   <div>
-                    <p>Pregunta {i}</p>
+                    <p>Pregunta {i + 1}</p>
                     <h2>{pregunta.opcionCorrecta}</h2>
                   </div>
                 ))}
