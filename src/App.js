@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { PreguntasData } from "./Data/Preguntas";
 
+import Start from "./Components/Start";
 import Header from "./Components/Header";
 import Opciones from "./Components/Opciones";
 import Timer from "./Components/Timer";
+import Finish from "./Components/Finish";
 
 import styles from "./App.module.scss";
-import Start from "./Components/Start";
-import Finish from "./Components/Finish";
 
 const App = () => {
   const [start, setStart] = useState(false);
